@@ -10,7 +10,12 @@ export default class Box extends Component {
     }
     inCrease = () => {
         this.setState({count : this.state.count + 1})
-        console.log(this.state.count)
+    }
+    decrease = () => {
+        this.setState({count : this.state.count - 1})
+    }
+    reset = () => {
+        this.setState({count : 0})
     }
     render() {
         return (
@@ -40,11 +45,13 @@ export default class Box extends Component {
                         <Text style={{color : 'black' , fontWeight : 'bold'}}>InCrease</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                        onPress={() => this.decrease()}
                         style={{backgroundColor : 'red' , padding : 15}}
                     >
                         <Text style={{color : 'black' , fontWeight : 'bold'}}>DeCrease</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                        onPress={() => this.reset()}
                         style={{backgroundColor : 'yellow' , padding : 15}}
                     >
                         <Text style={{color : 'black' , fontWeight : 'bold'}}>Reset</Text>
