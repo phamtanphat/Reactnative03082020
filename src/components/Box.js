@@ -2,6 +2,16 @@ import React, { Component } from 'react'
 import { Text, View , TouchableOpacity } from 'react-native'
 
 export default class Box extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            count : 0
+        }
+    }
+    inCrease = () => {
+        this.setState({count : this.state.count + 1})
+        console.log(this.state.count)
+    }
     render() {
         return (
             <View
@@ -14,8 +24,8 @@ export default class Box extends Component {
                         alignSelf: 'center',
                         fontSize: 20,
                         color: 'red'
-                    }}>
-                    Count : 0
+                }}>
+                    Count : {this.state.count}
                 </Text>
                 <View 
                     style={{
@@ -24,6 +34,7 @@ export default class Box extends Component {
                         justifyContent : 'space-evenly',
                     }}>
                     <TouchableOpacity
+                        onPress={() => this.inCrease()}
                         style={{backgroundColor : 'green' , padding : 15}}
                     >
                         <Text style={{color : 'black' , fontWeight : 'bold'}}>InCrease</Text>
