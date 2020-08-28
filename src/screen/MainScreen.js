@@ -20,6 +20,7 @@ export default class MainScreen extends Component {
             }
             return item
         })
+        this.textInput.clear()
         this.setState({ words: newWords })
     }
     removeWord = (id) => {
@@ -36,7 +37,8 @@ export default class MainScreen extends Component {
             return (
                 <View >
                     <View style={styles.containerTextInput}>
-                    <TextInput 
+                    <TextInput
+                        ref={refs => this.textInput = refs}
                         placeholder="English"
                         style={styles.textInput}/>
                     <TextInput 
