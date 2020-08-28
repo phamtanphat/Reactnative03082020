@@ -1,88 +1,82 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet , TouchableOpacity} from 'react-native'
 import Box from '../components/Box'
+import Dimensions from '../ultils/Dimensions'
 
 export default class MainScreen extends Component {
-
-    // showVn = (word) => {
-    //     if(word.isMemorized){
-    //         return(
-    //             <Text style={styles.textVn}>----</Text>
-    //         )
-    //     }else{
-    //         return(
-    //             <Text style={styles.textVn}>{word.vn}</Text>
-    //         )
-    //     }
-    // }
     render() {
         const word = { id: 1, en: 'One', vn: 'Mot', isMemorized: true }
         return (
-            <View style={styles.container}>
-                <View style={styles.groupText}>
-                    <Text
-                        style={styles.textEn}>
-                        {word.en}
-                    </Text>
-                    <Text
-                        style={styles.textVn}>
-                        {word.isMemorized ? "----" : word.vn}
+            <View style={styles.wordgroup} >
+                <View style={styles.textgroup}>
+                    <Text style={styles.textEn}>{word.en}</Text>
+                    <Text style={styles.textVn}> 
+                        {word.isMemorized ? '----' : word.vn}
                     </Text>
                 </View>
-                <View style={styles.groupButton}>
-                   <TouchableOpacity
-                        style={{
-                            ...styles.boxMemorized,
-                            backgroundColor : word.isMemorized ? '#27A745' : '#C82333'
-                        }}
-                   >
-                       <Text 
-                            style={styles.textMemorized}>
-                            {word.isMemorized ? 'Forgot' : 'Memorized'}
+                <View style={styles.textgroup}>
+                    <TouchableOpacity
+                        style={word.isMemorized ? styles.buttonisForgot : styles.buttonisMemorized}
+                    >
+                        <Text 
+                            style={styles.textisMemorized}>
+                            {word.isMemorized ? "Forgot" : "isMemorized"}
                         </Text>
-                   </TouchableOpacity>
-                   <TouchableOpacity
-                        style={styles.boxRemove}
-                   >
-                       <Text style={styles.textRemove}>Remove</Text>
-                   </TouchableOpacity>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.buttonRemove}
+                    >
+                        <Text style={styles.textRemove}>Remove</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
     }
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor : ''
+    wordgroup: {
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
+        backgroundColor: '#F0F0F0',
+        borderRadius : 5,
+        paddingVertical : 5
     },
-    groupText: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly'
+    textgroup: {
+        flexDirection : 'row',
+        justifyContent: 'space-evenly',
+        marginBottom: 10
     },
-    textEn: {
-        color: 'green',
-        fontSize: 20
+    buttonisMemorized : {
+        padding : 10,
+        backgroundColor : 'red',
+        borderRadius : 5
     },
-    textVn: {
-        color: 'red',
-        fontSize: 20
+    buttonisForgot: {
+        padding : 10,
+        backgroundColor : '#218838',
+        borderRadius : 5
     },
-    groupButton: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly'
+    buttonRemove: {
+        padding : 10,
+        backgroundColor : '#E0A800',
+        borderRadius : 5
     },
-    textMemorized: {
+    textisMemorized: {
+        fontSize : 20,
         color : 'white'
     },
     textRemove: {
-        color : 'black'
+        fontSize : 20,
+        color : 'white'
     },
-    boxRemove: {
-        padding : 10,
-        backgroundColor : '#E0A800'
+    textEn: {
+        color : '#45B157',
+        fontSize : Dimensions.getWidth() / 15,
+        fontWeight: '500'
     },
-    boxMemorized: {
-        padding : 10,
-    }
+    textVn: {
+        color : '#DA2846',
+        fontSize : Dimensions.getWidth()  / 15,
+        fontWeight: '500'
+    },
 })
