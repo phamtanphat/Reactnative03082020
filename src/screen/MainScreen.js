@@ -4,16 +4,18 @@ import Box from '../components/Box'
 import dimensions from '../utils/dimensions'
 
 export default class MainScreen extends Component {
-    render() {
-        const words = [
+    state = {
+        words : [
             { id: 1, en: 'One', vn: 'Mot', isMemorized: true },
-            { id: 2, en: 'Two', vn: 'Hai', isMemorized: true },
-            { id: 3, en: 'Three', vn: 'Ba', isMemorized: true },
+            { id: 2, en: 'Two', vn: 'Hai', isMemorized: false },
+            { id: 3, en: 'Three', vn: 'Ba', isMemorized: false },
             { id: 4, en: 'Four', vn: 'Bon', isMemorized: true },
         ]
+    }
+    render() {
         return (
             <View>
-                {words.map(word => {
+                {this.state.words.map(word => {
                     return (
                         <View 
                             key={word.id}
@@ -26,6 +28,15 @@ export default class MainScreen extends Component {
                             </View>
                             <View style={styles.textgroup}>
                                 <TouchableOpacity
+                                    onPress={() => {
+                                        const newWords = this.state.words.map(item =>{
+                                            if(item.id == word.id){
+                                                return {...item , isMemorized : !item.isMemorized}
+                                            }
+                                            return item
+                                        })
+                                        this.setState({words : newWords})
+                                    }}
                                     style={word.isMemorized ? styles.buttonisForgot : styles.buttonisMemorized}
                                 >
                                     <Text
@@ -34,6 +45,15 @@ export default class MainScreen extends Component {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
+                                    onPress={() => {
+                                        const newWords = this.state.words.filter(item =>{
+                                            if(item.id == word.id){
+                                                return false
+                                            }
+                                            return true
+                                        })
+                                        this.setState({words : newWords})
+                                    }}
                                     style={styles.buttonRemove}
                                 >
                                     <Text style={styles.textRemove}>Remove</Text>
