@@ -68,6 +68,15 @@ export default class MainScreen extends Component {
                             </View>
                         )
                     }}
+                    ItemSeparatorComponent={() => {
+                        return(
+                            <View style={{height : 10}}/>
+                        )
+                    }}
+                    refreshing={true}
+                    onRefresh={()=>{
+                        console.log("refresh")
+                    }}
                 />
             </View >
         )
@@ -80,7 +89,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0F0F0',
         borderRadius: 5,
         paddingVertical: 5,
-        margin: 10
+        marginHorizontal: 10
     },
     textgroup: {
         flexDirection: 'row',
