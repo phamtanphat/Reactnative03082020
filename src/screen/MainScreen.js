@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, FlatList , TextInput} from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, FlatList , TextInput , Alert} from 'react-native'
 import Box from '../components/Box'
 import dimensions from '../utils/dimensions'
 
@@ -11,7 +11,9 @@ export default class MainScreen extends Component {
             { id: 3, en: 'Three', vn: 'Ba', isMemorized: false },
             { id: 4, en: 'Four', vn: 'Bon', isMemorized: true },
         ],
-        shouldShowForm : false
+        shouldShowForm : false,
+        textVn: '',
+        textEn: '',
     }
     toggleWord = (id) => {
         const newWords = this.state.words.map(item => {
@@ -41,15 +43,27 @@ export default class MainScreen extends Component {
                 <View >
                     <View style={styles.containerTextInput}>
                     <TextInput
+                        onChangeText={text => this.state.textEn = text}
                         ref={refs => this.textInput = refs}
                         placeholder="English"
                         style={styles.textInput}/>
                     <TextInput 
+                        onChangeText={text => this.state.textVn = text}
                         placeholder="Vietnamese"
                         style={styles.textInput}/>
                     </View>
                     <View style={styles.containerTouchable}>
                         <TouchableOpacity
+                            onPress={() => {
+                                const {textEn , textVn} = this.state
+                                if(!textEn || !textVn){
+                                    Alert.alert(
+                                        "Thong Bao" , 
+                                        "Ban chua nhap du thong tin" ,[
+                                            {text : "Da hieu" , style : "cancel"}
+                                        ])
+                                }
+                            }}
                             style={styles.touchableAddword}
                         >
                             <Text style={styles.textTouchable}>Add word</Text>
@@ -75,6 +89,7 @@ export default class MainScreen extends Component {
         }
     }
     render() {
+        console.log("render")
         return (
             <View style={styles.container}>
                 {this.renderForm(this.state.shouldShowForm)}

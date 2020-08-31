@@ -52,7 +52,7 @@ export default class Form extends Component {
     }
     render() {
         return (
-            <View>
+            <View style={{flex :1 ,justifyContent : 'flex-end' }}>
                 <Formik
                     initialValues={{ vn: '', en: '', shouldShowForm: this.state.shouldShowForm }}
                     validationSchema={

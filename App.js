@@ -4,13 +4,13 @@
 import React, { Component } from 'react'
 import { SafeAreaView} from 'react-native'
 import Form from './src/components/Form'
-// import MainScreen from './src/screen/MainScreen'
+import MainScreen from './src/screen/MainScreen'
 
 export default class App extends Component {
   render() {
     return (
       <SafeAreaView style={{flex : 1}}>
-        <Form/>
+        <MainScreen/>
       </SafeAreaView>
     )
   }
