@@ -11,7 +11,7 @@ export default class MainScreen extends Component {
             { id: 3, en: 'Three', vn: 'Ba', isMemorized: false },
             { id: 4, en: 'Four', vn: 'Bon', isMemorized: true },
         ],
-        shouldShowForm : true
+        shouldShowForm : false
     }
     toggleWord = (id) => {
         const newWords = this.state.words.map(item => {
@@ -31,6 +31,9 @@ export default class MainScreen extends Component {
             return true
         })
         this.setState({ words: newWords })
+    }
+    toggleForm = () => {
+        this.setState({shouldShowForm : !this.state.shouldShowForm})
     }
     renderForm = (shouldShowForm) => {
         if (shouldShowForm){
@@ -52,6 +55,7 @@ export default class MainScreen extends Component {
                             <Text style={styles.textTouchable}>Add word</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
+                            onPress={this.toggleForm}
                             style={styles.touchableCancel}
                         >
                             <Text style={styles.textTouchable}>Cancel</Text>
@@ -63,6 +67,7 @@ export default class MainScreen extends Component {
         } else {
             return (
                 <TouchableOpacity
+                    onPress={this.toggleForm}
                     style={styles.buttonOpenForm}>
                     <Text style={styles.textOpenForm}>+</Text>
                 </TouchableOpacity>
@@ -150,7 +155,7 @@ const styles = StyleSheet.create({
         borderRadius : 10
     },
     buttonOpenForm: {
-        width : '100%',
+        marginHorizontal : 10,
         height : 50,
         backgroundColor : '#45B157',
         borderRadius : 5,
