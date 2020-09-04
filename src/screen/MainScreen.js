@@ -96,6 +96,44 @@ export default class MainScreen extends Component {
       );
     }
   };
+
+  renderItemWord = (item) => {
+    const {filterMode} = this.state;
+    if (filterMode === 'Show_Forgot' && !item.isMemorized) {
+      return null;
+    } else if (filterMode === 'Show_Memorized' && item.isMemorized) {
+      return null;
+    } else {
+      return (
+        <View key={item.id} style={styles.wordgroup}>
+          <View style={styles.textgroup}>
+            <Text style={styles.textEn}>{item.en}</Text>
+            <Text style={styles.textVn}>
+              {item.isMemorized ? '----' : item.vn}
+            </Text>
+          </View>
+          <View style={styles.textgroup}>
+            <TouchableOpacity
+              onPress={() => this.toggleWord(item.id)}
+              style={
+                item.isMemorized
+                  ? styles.buttonisForgot
+                  : styles.buttonisMemorized
+              }>
+              <Text style={styles.textisMemorized}>
+                {item.isMemorized ? 'Forgot' : 'isMemorized'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.removeWord(item.id)}
+              style={styles.buttonRemove}>
+              <Text style={styles.textRemove}>Remove</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -119,36 +157,7 @@ export default class MainScreen extends Component {
           data={this.state.words}
           extraData={this.state.words}
           keyExtractor={(item, index) => item.id.toString()}
-          renderItem={({item}) => {
-            return (
-              <View key={item.id} style={styles.wordgroup}>
-                <View style={styles.textgroup}>
-                  <Text style={styles.textEn}>{item.en}</Text>
-                  <Text style={styles.textVn}>
-                    {item.isMemorized ? '----' : item.vn}
-                  </Text>
-                </View>
-                <View style={styles.textgroup}>
-                  <TouchableOpacity
-                    onPress={() => this.toggleWord(item.id)}
-                    style={
-                      item.isMemorized
-                        ? styles.buttonisForgot
-                        : styles.buttonisMemorized
-                    }>
-                    <Text style={styles.textisMemorized}>
-                      {item.isMemorized ? 'Forgot' : 'isMemorized'}
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => this.removeWord(item.id)}
-                    style={styles.buttonRemove}>
-                    <Text style={styles.textRemove}>Remove</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            );
-          }}
+          renderItem={({item}) => this.renderItemWord(item)}
           ItemSeparatorComponent={() => {
             return <View style={{height: 10}} />;
           }}
