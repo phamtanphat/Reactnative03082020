@@ -9,7 +9,6 @@ import {
   Alert,
   Keyboard,
 } from 'react-native';
-import Box from '../components/Box';
 import dimensions from '../utils/dimensions';
 import RNPickerSelect from 'react-native-picker-select';
 
