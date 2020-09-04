@@ -23,6 +23,8 @@ export default class MainScreen extends Component {
     shouldShowForm: false,
     textVn: '',
     textEn: '',
+    optionSelectFilter: null,
+    filterMode: 'Show_All',
   };
   toggleWord = (id) => {
     const newWords = this.state.words.map((item) => {
@@ -95,12 +97,16 @@ export default class MainScreen extends Component {
     }
   };
   render() {
-    console.log('render');
     return (
       <View style={styles.container}>
         {this.renderForm(this.state.shouldShowForm)}
         <View style={styles.containerPickerStyle}>
           <RNPickerSelect
+            placeholder={{label: 'Lựa chọn hiển thị'}}
+            onValueChange={(value) => (this.state.optionSelectFilter = value)}
+            onDonePress={() => {
+              this.setState({filterMode: this.state.optionSelectFilter});
+            }}
             items={[
               {label: 'Show All', value: 'Show_All'},
               {label: 'Show Forgot', value: 'Show_Forgot'},
