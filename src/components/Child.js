@@ -13,7 +13,7 @@ export default class Child extends Component {
             justifyContent: 'space-evenly',
           }}>
           <TouchableOpacity
-            onPress={() => this.inCrease()}
+            onPress={() => this.props.onInCrease()}
             style={{backgroundColor: 'green', padding: 15}}>
             <Text style={{color: 'black', fontWeight: 'bold'}}>InCrease</Text>
           </TouchableOpacity>
