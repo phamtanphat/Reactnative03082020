@@ -7,6 +7,7 @@ import {
   FlatList,
   TextInput,
   Alert,
+  Keyboard,
 } from 'react-native';
 import Box from '../components/Box';
 import dimensions from '../utils/dimensions';
@@ -47,6 +48,26 @@ export default class MainScreen extends Component {
   toggleForm = () => {
     this.setState({shouldShowForm: !this.state.shouldShowForm});
   };
+  addWord = () => {
+    const {textEn, textVn, words} = this.state;
+    if (!textEn || !textVn) {
+      Alert.alert('Thong Bao', 'Ban chua nhap du thong tin', [
+        {text: 'Da hieu', style: 'cancel'},
+      ]);
+    }
+    const newWord = {
+      id: words.length + 1,
+      en: textEn,
+      vn: textVn,
+      isMemorized: false,
+    };
+    const newWords = Object.assign([], words);
+    newWords.unshift(newWord);
+    Keyboard.dismiss();
+    this.textInputEn.clear();
+    this.textInputVn.clear();
+    this.setState({words: newWords});
+  };
   renderForm = (shouldShowForm) => {
     if (shouldShowForm) {
       return (
@@ -67,14 +88,7 @@ export default class MainScreen extends Component {
           </View>
           <View style={styles.containerTouchable}>
             <TouchableOpacity
-              onPress={() => {
-                const {textEn, textVn} = this.state;
-                if (!textEn || !textVn) {
-                  Alert.alert('Thong Bao', 'Ban chua nhap du thong tin', [
-                    {text: 'Da hieu', style: 'cancel'},
-                  ]);
-                }
-              }}
+              onPress={this.addWord}
               style={styles.touchableAddword}>
               <Text style={styles.textTouchable}>Add word</Text>
             </TouchableOpacity>
@@ -96,7 +110,6 @@ export default class MainScreen extends Component {
       );
     }
   };
-
   renderItemWord = (item) => {
     const {filterMode} = this.state;
     if (filterMode === 'Show_Forgot' && !item.isMemorized) {
