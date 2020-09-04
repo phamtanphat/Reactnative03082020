@@ -4,6 +4,7 @@ import {Text, View, TouchableOpacity} from 'react-native';
 
 export default class Child extends Component {
   render() {
+    console.log("Child")
     return (
       <View>
         <View

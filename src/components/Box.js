@@ -20,6 +20,7 @@ export default class Box extends Component {
     this.setState({count: 0});
   };
   render() {
+    console.log("Box")
     return (
       <View
         style={{
