@@ -1,14 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 
-export default class Child extends Component {
-  shouldComponentUpdate(nextProps, nextStates) {
-    if (this.props.values === nextProps.values) {
-      return false;
-    }
-    return true;
-  }
+export default class Child extends PureComponent {
   render() {
     console.log('Child');
     return (

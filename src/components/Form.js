@@ -6,16 +6,8 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {Formik} from 'formik';
-import * as Yup from 'yup';
 
 export default class Form extends Component {
-  state = {
-    shouldShowForm: false,
-  };
-  toggleForm = () => {
-    this.setState({shouldShowForm: !this.state.shouldShowForm});
-  };
   renderForm = (shouldShowForm) => {
     if (shouldShowForm) {
       return (
@@ -51,56 +43,7 @@ export default class Form extends Component {
     }
   };
   render() {
-    return (
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
-        <Formik
-          initialValues={{
-            vn: '',
-            en: '',
-            shouldShowForm: this.state.shouldShowForm,
-          }}
-          validationSchema={Yup.object().shape({
-            vn: Yup.string().length(5, 'Qua dai').required(),
-          })}
-          onSubmit={(values) => console.log(values)}>
-          {({handleChange, values, handleSubmit, errors, handleBlur}) => {
-            return (
-              <View>
-                <View style={styles.containerTextInput}>
-                  <TextInput
-                    onBlur={handleBlur('vn')}
-                    onChangeText={handleChange('vn')}
-                    value={values.vn}
-                    ref={(refs) => (this.textInput = refs)}
-                    placeholder="English"
-                    style={styles.textInput}
-                  />
-                  {errors.vn ? <Text>{errors.vn}</Text> : null}
-                  <TextInput
-                    onBlur={handleBlur('en')}
-                    onChangeText={handleChange('ven')}
-                    value={values.en}
-                    placeholder="Vietnamese"
-                    style={styles.textInput}
-                  />
-                  {errors.en ? <Text>{errors.en}</Text> : null}
-                </View>
-                <View style={styles.containerTouchable}>
-                  <TouchableOpacity style={styles.touchableAddword}>
-                    <Text style={styles.textTouchable}>Add word</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={handleSubmit}
-                    style={styles.touchableCancel}>
-                    <Text style={styles.textTouchable}>Cancel</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            );
-          }}
-        </Formik>
-      </View>
-    );
+    return this.renderForm(this.props.shouldShowForm);
   }
 }
 

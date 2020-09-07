@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import dimensions from '../utils/dimensions';
 import RNPickerSelect from 'react-native-picker-select';
+import Form from '../components/Form';
 
 export default class MainScreen extends Component {
   state = {
@@ -67,48 +68,6 @@ export default class MainScreen extends Component {
     this.textInputVn.clear();
     this.setState({words: newWords});
   };
-  renderForm = (shouldShowForm) => {
-    if (shouldShowForm) {
-      return (
-        <View>
-          <View style={styles.containerTextInput}>
-            <TextInput
-              ref={(refs) => (this.textInputEn = refs)}
-              onChangeText={(text) => (this.state.textEn = text)}
-              placeholder="English"
-              style={styles.textInput}
-            />
-            <TextInput
-              ref={(refs) => (this.textInputVn = refs)}
-              onChangeText={(text) => (this.state.textVn = text)}
-              placeholder="Vietnamese"
-              style={styles.textInput}
-            />
-          </View>
-          <View style={styles.containerTouchable}>
-            <TouchableOpacity
-              onPress={this.addWord}
-              style={styles.touchableAddword}>
-              <Text style={styles.textTouchable}>Add word</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.toggleForm}
-              style={styles.touchableCancel}>
-              <Text style={styles.textTouchable}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
-    } else {
-      return (
-        <TouchableOpacity
-          onPress={this.toggleForm}
-          style={styles.buttonOpenForm}>
-          <Text style={styles.textOpenForm}>+</Text>
-        </TouchableOpacity>
-      );
-    }
-  };
   renderItemWord = (item) => {
     const {filterMode} = this.state;
     if (filterMode === 'Show_Forgot' && !item.isMemorized) {
@@ -149,7 +108,7 @@ export default class MainScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.renderForm(this.state.shouldShowForm)}
+        <Form shouldShowForm={this.state.shouldShowForm} />
         <View style={styles.containerPickerStyle}>
           <RNPickerSelect
             placeholder={{label: 'Lựa chọn hiển thị'}}
@@ -164,7 +123,6 @@ export default class MainScreen extends Component {
             ]}
           />
         </View>
-
         <FlatList
           data={this.state.words}
           extraData={this.state.words}
