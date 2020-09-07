@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Alert, Keyboard} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Form from '../components/Form';
 import Filter from '../components/Filter';
 import Word from '../components/Word';
@@ -13,8 +13,6 @@ export default class MainScreen extends Component {
       {id: 4, en: 'Four', vn: 'Bon', isMemorized: true},
     ],
     shouldShowForm: false,
-    textVn: '',
-    textEn: '',
     filterMode: 'Show_All',
     arrayFilter: [
       {label: 'Show All', value: 'Show_All'},
@@ -40,38 +38,29 @@ export default class MainScreen extends Component {
     });
     this.setState({words: newWords});
   };
-  toggleForm = () => {
+  onToggleForm = () => {
     this.setState({shouldShowForm: !this.state.shouldShowForm});
   };
-  addWord = () => {
-    const {textEn, textVn, words} = this.state;
-    if (!textEn || !textVn) {
-      Alert.alert('Thong Bao', 'Ban chua nhap du thong tin', [
-        {text: 'Da hieu', style: 'cancel'},
-      ]);
-    }
-    const newWord = {
-      id: words.length + 1,
-      en: textEn,
-      vn: textVn,
-      isMemorized: false,
-    };
-    const newWords = Object.assign([], words);
-    newWords.unshift(newWord);
-    Keyboard.dismiss();
-    this.textInputEn.clear();
-    this.textInputVn.clear();
-    this.setState({words: newWords});
+  onAddWord = (words) => {
+    this.setState({words});
   };
-
+  onSetFilterMode = (filterMode) => {
+    this.setState({filterMode});
+  };
   render() {
     return (
       <View style={styles.container}>
-        <Form shouldShowForm={this.state.shouldShowForm} />
+        <Form
+          onAddWord={this.onAddWord}
+          words={this.state.words}
+          onToggleForm={this.onToggleForm}
+          shouldShowForm={this.state.shouldShowForm}
+        />
         <Filter
+          onSetFilterMode={this.onSetFilterMode}
           arrayFilter={this.state.arrayFilter}
           filterMode={this.state.filterMode}
-          placeholder="Hãy lựa chọn hiển thị"
+          placeholder={{label: 'Lựa chọn hiển thị'}}
         />
         <Word words={this.state.words} filterMode={this.state.filterMode} />
       </View>

@@ -1,10 +1,10 @@
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 
 const getWidth = () => {
-    return Dimensions.get("window").width
-}
+  return Dimensions.get('window').width;
+};
 const getHeight = () => {
-    return Dimensions.get("window").height
-}
+  return Dimensions.get('window').height;
+};
 
-export default {getHeight , getWidth}
+export default {getHeight, getWidth};

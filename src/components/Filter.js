@@ -3,14 +3,16 @@ import {View, StyleSheet} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 export default class Filter extends Component {
+  state = {
+    filterSelected: null,
+  };
   render() {
     return (
       <View style={styles.containerPickerStyle}>
         <RNPickerSelect
           placeholder={this.props.placeholder}
           value={this.props.filterMode}
-          onValueChange={(value) => (this.state.optionSelectFilter = value)}
-          onDonePress={(_) => _}
+          onValueChange={(value) => this.props.onSetFilterMode(value)}
           items={this.props.arrayFilter}
         />
       </View>
