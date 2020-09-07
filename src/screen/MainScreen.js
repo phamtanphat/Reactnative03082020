@@ -1,17 +1,8 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  TextInput,
-  Alert,
-  Keyboard,
-} from 'react-native';
-import dimensions from '../utils/dimensions';
-import RNPickerSelect from 'react-native-picker-select';
+import {View, StyleSheet, Alert, Keyboard} from 'react-native';
 import Form from '../components/Form';
+import Filter from '../components/Filter';
+import Word from '../components/Word';
 
 export default class MainScreen extends Component {
   state = {
@@ -24,8 +15,12 @@ export default class MainScreen extends Component {
     shouldShowForm: false,
     textVn: '',
     textEn: '',
-    optionSelectFilter: null,
     filterMode: 'Show_All',
+    arrayFilter: [
+      {label: 'Show All', value: 'Show_All'},
+      {label: 'Show Forgot', value: 'Show_Forgot'},
+      {label: 'Show Memorized', value: 'Show_Memorized'},
+    ],
   };
   toggleWord = (id) => {
     const newWords = this.state.words.map((item) => {
@@ -68,70 +63,17 @@ export default class MainScreen extends Component {
     this.textInputVn.clear();
     this.setState({words: newWords});
   };
-  renderItemWord = (item) => {
-    const {filterMode} = this.state;
-    if (filterMode === 'Show_Forgot' && !item.isMemorized) {
-      return null;
-    } else if (filterMode === 'Show_Memorized' && item.isMemorized) {
-      return null;
-    } else {
-      return (
-        <View key={item.id} style={styles.wordgroup}>
-          <View style={styles.textgroup}>
-            <Text style={styles.textEn}>{item.en}</Text>
-            <Text style={styles.textVn}>
-              {item.isMemorized ? '----' : item.vn}
-            </Text>
-          </View>
-          <View style={styles.textgroup}>
-            <TouchableOpacity
-              onPress={() => this.toggleWord(item.id)}
-              style={
-                item.isMemorized
-                  ? styles.buttonisForgot
-                  : styles.buttonisMemorized
-              }>
-              <Text style={styles.textisMemorized}>
-                {item.isMemorized ? 'Forgot' : 'isMemorized'}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.removeWord(item.id)}
-              style={styles.buttonRemove}>
-              <Text style={styles.textRemove}>Remove</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
-    }
-  };
+
   render() {
     return (
       <View style={styles.container}>
         <Form shouldShowForm={this.state.shouldShowForm} />
-        <View style={styles.containerPickerStyle}>
-          <RNPickerSelect
-            placeholder={{label: 'Lựa chọn hiển thị'}}
-            onValueChange={(value) => (this.state.optionSelectFilter = value)}
-            onDonePress={() => {
-              this.setState({filterMode: this.state.optionSelectFilter});
-            }}
-            items={[
-              {label: 'Show All', value: 'Show_All'},
-              {label: 'Show Forgot', value: 'Show_Forgot'},
-              {label: 'Show Memorized', value: 'Show_Memorized'},
-            ]}
-          />
-        </View>
-        <FlatList
-          data={this.state.words}
-          extraData={this.state.words}
-          keyExtractor={(item, index) => item.id.toString()}
-          renderItem={({item}) => this.renderItemWord(item)}
-          ItemSeparatorComponent={() => {
-            return <View style={{height: 10}} />;
-          }}
+        <Filter
+          arrayFilter={this.state.arrayFilter}
+          filterMode={this.state.filterMode}
+          placeholder="Hãy lựa chọn hiển thị"
         />
+        <Word words={this.state.words} filterMode={this.state.filterMode} />
       </View>
     );
   }
@@ -139,106 +81,5 @@ export default class MainScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  containerTextInput: {
-    width: '100%',
-    height: 150,
-    justifyContent: 'space-evenly',
-  },
-  textInput: {
-    borderWidth: 1,
-    height: 60,
-    fontSize: 20,
-    marginHorizontal: 10,
-    paddingHorizontal: 10,
-  },
-  touchableAddword: {
-    backgroundColor: '#218838',
-    padding: 15,
-    borderRadius: 10,
-  },
-  textTouchable: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: '500',
-  },
-  touchableCancel: {
-    backgroundColor: 'red',
-    padding: 15,
-    borderRadius: 10,
-  },
-  buttonOpenForm: {
-    marginHorizontal: 10,
-    height: 50,
-    backgroundColor: '#45B157',
-    borderRadius: 5,
-    marginBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textOpenForm: {
-    color: 'white',
-    fontSize: 30,
-  },
-  containerTouchable: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginBottom: 10,
-  },
-  wordgroup: {
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    backgroundColor: '#F0F0F0',
-    borderRadius: 5,
-    paddingVertical: 5,
-    marginHorizontal: 10,
-  },
-  textgroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginBottom: 10,
-  },
-  buttonisMemorized: {
-    padding: 10,
-    backgroundColor: 'red',
-    borderRadius: 5,
-  },
-  buttonisForgot: {
-    padding: 10,
-    backgroundColor: '#218838',
-    borderRadius: 5,
-  },
-  buttonRemove: {
-    padding: 10,
-    backgroundColor: '#E0A800',
-    borderRadius: 5,
-  },
-  textisMemorized: {
-    fontSize: 20,
-    color: 'white',
-  },
-  textRemove: {
-    fontSize: 20,
-    color: 'white',
-  },
-  textEn: {
-    color: '#45B157',
-    fontSize: dimensions.getWidth() / 15,
-    fontWeight: '500',
-  },
-  textVn: {
-    color: '#DA2846',
-    fontSize: dimensions.getWidth() / 15,
-    fontWeight: '500',
-  },
-  containerPickerStyle: {
-    borderWidth: 1,
-    borderRadius: 1,
-    borderColor: 'black',
-    padding: 20,
-    marginHorizontal: 10,
-  },
-  pickerStyle: {
-    padding: 50,
   },
 });
