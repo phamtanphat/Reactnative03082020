@@ -8,10 +8,11 @@ export default class Box extends Component {
     super(props);
     this.state = {
       count: 0,
+      values: '',
     };
   }
   onInCrease = () => {
-    this.setState({count: this.state.count + 1});
+    this.setState({count: this.state.count + 1, values: Math.random()});
   };
   onDecrease = () => {
     this.setState({count: this.state.count - 1});
@@ -20,7 +21,7 @@ export default class Box extends Component {
     this.setState({count: 0});
   };
   render() {
-    console.log("Box")
+    console.log('Box');
     return (
       <View
         style={{
@@ -39,6 +40,7 @@ export default class Box extends Component {
           onInCrease={this.onInCrease}
           onDecrease={this.onDecrease}
           onReset={this.onReset}
+          values={this.state.values}
         />
       </View>
     );

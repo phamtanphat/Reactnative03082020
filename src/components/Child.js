@@ -3,8 +3,14 @@ import React, {Component} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 
 export default class Child extends Component {
+  shouldComponentUpdate(nextProps, nextStates) {
+    if (this.props.values === nextProps.values) {
+      return false;
+    }
+    return true;
+  }
   render() {
-    console.log("Child")
+    console.log('Child');
     return (
       <View>
         <View
@@ -19,15 +25,16 @@ export default class Child extends Component {
             <Text style={{color: 'black', fontWeight: 'bold'}}>InCrease</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.decrease()}
+            onPress={() => this.props.onDecrease()}
             style={{backgroundColor: 'red', padding: 15}}>
             <Text style={{color: 'black', fontWeight: 'bold'}}>DeCrease</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.reset()}
+            onPress={() => this.props.onReset()}
             style={{backgroundColor: 'yellow', padding: 15}}>
             <Text style={{color: 'black', fontWeight: 'bold'}}>Reset</Text>
           </TouchableOpacity>
+          <Text>{this.props.values}</Text>
         </View>
       </View>
     );
