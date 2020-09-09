@@ -20,7 +20,7 @@ export default class MainScreen extends Component {
       {label: 'Show Memorized', value: 'Show_Memorized'},
     ],
   };
-  toggleWord = (id) => {
+  onToggleWord = (id) => {
     const newWords = this.state.words.map((item) => {
       if (item.id === id) {
         return {...item, isMemorized: !item.isMemorized};
@@ -29,7 +29,7 @@ export default class MainScreen extends Component {
     });
     this.setState({words: newWords});
   };
-  removeWord = (id) => {
+  onRemoveWord = (id) => {
     const newWords = this.state.words.filter((item) => {
       if (item.id === id) {
         return false;
@@ -62,7 +62,12 @@ export default class MainScreen extends Component {
           filterMode={this.state.filterMode}
           placeholder={{label: 'Lựa chọn hiển thị'}}
         />
-        <Word words={this.state.words} filterMode={this.state.filterMode} />
+        <Word
+          onRemoveWord={this.onRemoveWord}
+          onToggleWord={this.onToggleWord}
+          words={this.state.words}
+          filterMode={this.state.filterMode}
+        />
       </View>
     );
   }

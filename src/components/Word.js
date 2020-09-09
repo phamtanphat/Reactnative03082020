@@ -10,7 +10,12 @@ export default class Word extends Component {
         extraData={this.props.words}
         keyExtractor={(item, index) => item.id.toString()}
         renderItem={({item}) => (
-          <WordItem item={item} filterMode={this.props.filterMode} />
+          <WordItem
+            onRemoveWord={this.props.onRemoveWord}
+            onToggleWord={this.props.onToggleWord}
+            item={item}
+            filterMode={this.props.filterMode}
+          />
         )}
       />
     );

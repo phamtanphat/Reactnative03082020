@@ -20,7 +20,7 @@ export default class WordItem extends Component {
           </View>
           <View style={styles.textgroup}>
             <TouchableOpacity
-              onPress={() => this.toggleWord(item.id)}
+              onPress={() => this.props.onToggleWord(item.id)}
               style={
                 item.isMemorized
                   ? styles.buttonisForgot
@@ -31,7 +31,7 @@ export default class WordItem extends Component {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.removeWord(item.id)}
+              onPress={() => this.props.onRemoveWord(item.id)}
               style={styles.buttonRemove}>
               <Text style={styles.textRemove}>Remove</Text>
             </TouchableOpacity>
