@@ -2,24 +2,9 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import Child from './Child';
+import {connect} from 'react-redux';
 
-export default class Box extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      count: 0,
-      values: '',
-    };
-  }
-  onInCrease = () => {
-    this.setState({count: this.state.count + 1, values: Math.random()});
-  };
-  onDecrease = () => {
-    this.setState({count: this.state.count - 1});
-  };
-  onReset = () => {
-    this.setState({count: 0});
-  };
+class Box extends Component {
   render() {
     console.log('Box');
     return (
@@ -34,15 +19,16 @@ export default class Box extends Component {
             fontSize: 20,
             color: 'red',
           }}>
-          Count : {this.state.count}
+          Count : {this.props.count}
         </Text>
-        <Child
-          onInCrease={this.onInCrease}
-          onDecrease={this.onDecrease}
-          onReset={this.onReset}
-          values={this.state.values}
-        />
+        <Child />
       </View>
     );
   }
 }
+
+const mapStateToProps = function (store) {
+  return {count: store.count};
+};
+
+export default connect(mapStateToProps)(Box);
