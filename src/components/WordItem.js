@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import dimensions from '../utils/dimensions';
+import {connect} from 'react-redux';
 
-export default class WordItem extends Component {
+class WordItem extends Component {
   renderItemWord = (item) => {
     const {filterMode} = this.props;
     if (filterMode === 'Show_Forgot' && !item.isMemorized) {
@@ -93,3 +94,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
+
+const mapStateToProps = (state) => {
+  return {filterMode: state.filterMode};
+};
+export default connect(mapStateToProps)(WordItem);

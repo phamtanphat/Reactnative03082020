@@ -9,16 +9,23 @@ import Box from './src/components/Box';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
-const store = createStore((state = {count: 0, text: ''}, action) => {
-  if (action.type === 'INCREASE') {
-    return {...state, count: state.count + 1};
-  }
-  if (action.type === 'DECREASE') {
-    return {...state, count: state.count - 1};
-  }
-  if (action.type === 'RESET') {
-    return {...state, count: action.value};
-  }
+const defaultState = {
+  words: [
+    {id: 1, en: 'One', vn: 'Mot', isMemorized: false},
+    {id: 2, en: 'Two', vn: 'Hai', isMemorized: false},
+    {id: 3, en: 'Three', vn: 'Ba', isMemorized: false},
+    {id: 4, en: 'Four', vn: 'Bon', isMemorized: true},
+  ],
+  shouldShowForm: false,
+  filterMode: 'Show_All',
+  arrayFilter: [
+    {label: 'Show All', value: 'Show_All'},
+    {label: 'Show Forgot', value: 'Show_Forgot'},
+    {label: 'Show Memorized', value: 'Show_Memorized'},
+  ],
+};
+
+const store = createStore((state = defaultState, action) => {
   return state;
 });
 
@@ -27,7 +34,7 @@ export default class App extends Component {
     return (
       <SafeAreaView style={{flex: 1}}>
         <Provider store={store}>
-          <Box />
+          <MainScreen />
         </Provider>
       </SafeAreaView>
     );

@@ -8,8 +8,9 @@ import {
   Alert,
   Keyboard,
 } from 'react-native';
+import {connect} from 'react-redux';
 
-export default class Form extends Component {
+class Form extends Component {
   state = {
     textEn: '',
     textVn: '',
@@ -129,3 +130,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {shouldShowForm: state.shouldShowForm, words: state.words};
+};
+export default connect(mapStateToProps)(Form);

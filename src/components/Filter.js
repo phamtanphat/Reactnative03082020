@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import {connect} from 'react-redux';
 
-export default class Filter extends Component {
+class Filter extends Component {
   state = {
     filterSelected: null,
   };
@@ -31,3 +32,8 @@ const styles = StyleSheet.create({
     padding: 50,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {arrayFilter: state.arrayFilter, filterMode: state.filterMode};
+};
+export default connect(mapStateToProps)(Filter);

@@ -5,21 +5,6 @@ import Filter from '../components/Filter';
 import Word from '../components/Word';
 
 export default class MainScreen extends Component {
-  state = {
-    words: [
-      {id: 1, en: 'One', vn: 'Mot', isMemorized: true},
-      {id: 2, en: 'Two', vn: 'Hai', isMemorized: false},
-      {id: 3, en: 'Three', vn: 'Ba', isMemorized: false},
-      {id: 4, en: 'Four', vn: 'Bon', isMemorized: true},
-    ],
-    shouldShowForm: false,
-    filterMode: 'Show_All',
-    arrayFilter: [
-      {label: 'Show All', value: 'Show_All'},
-      {label: 'Show Forgot', value: 'Show_Forgot'},
-      {label: 'Show Memorized', value: 'Show_Memorized'},
-    ],
-  };
   onToggleWord = (id) => {
     const newWords = this.state.words.map((item) => {
       if (item.id === id) {
@@ -50,24 +35,9 @@ export default class MainScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Form
-          onAddWord={this.onAddWord}
-          words={this.state.words}
-          onToggleForm={this.onToggleForm}
-          shouldShowForm={this.state.shouldShowForm}
-        />
-        <Filter
-          onSetFilterMode={this.onSetFilterMode}
-          arrayFilter={this.state.arrayFilter}
-          filterMode={this.state.filterMode}
-          placeholder={{label: 'Lựa chọn hiển thị'}}
-        />
-        <Word
-          onRemoveWord={this.onRemoveWord}
-          onToggleWord={this.onToggleWord}
-          words={this.state.words}
-          filterMode={this.state.filterMode}
-        />
+        <Form />
+        <Filter placeholder={{label: 'Lựa chọn hiển thị'}} />
+        <Word />
       </View>
     );
   }
