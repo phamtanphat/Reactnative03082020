@@ -13,7 +13,9 @@ class Filter extends Component {
         <RNPickerSelect
           placeholder={this.props.placeholder}
           value={this.props.filterMode}
-          onValueChange={(value) => this.props.onSetFilterMode(value)}
+          onValueChange={(value) =>
+            this.props.dispatch({type: 'SET_FILTER_MODE', filterMode: value})
+          }
           items={this.props.arrayFilter}
         />
       </View>

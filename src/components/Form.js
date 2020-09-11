@@ -34,7 +34,7 @@ class Form extends Component {
     Keyboard.dismiss();
     this.textInputEn.clear();
     this.textInputVn.clear();
-    this.props.onAddWord(newWords);
+    this.props.dispatch({type: 'ADD_WORD', words: newWords});
   };
   renderForm = (shouldShowForm) => {
     if (shouldShowForm) {
@@ -61,7 +61,7 @@ class Form extends Component {
               <Text style={styles.textTouchable}>Add word</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={this.props.onToggleForm}
+              onPress={() => this.props.dispatch({type: 'TOGGLE_FORM'})}
               style={styles.touchableCancel}>
               <Text style={styles.textTouchable}>Cancel</Text>
             </TouchableOpacity>
@@ -71,7 +71,7 @@ class Form extends Component {
     } else {
       return (
         <TouchableOpacity
-          onPress={this.props.onToggleForm}
+          onPress={() => this.props.dispatch({type: 'TOGGLE_FORM'})}
           style={styles.buttonOpenForm}>
           <Text style={styles.textOpenForm}>+</Text>
         </TouchableOpacity>
