@@ -16,7 +16,11 @@ class Filter extends Component {
           onValueChange={(value) =>
             this.props.dispatch({type: 'SET_FILTER_MODE', filterMode: value})
           }
-          items={this.props.arrayFilter}
+          items={[
+            {label: 'Show All', value: 'Show_All'},
+            {label: 'Show Forgot', value: 'Show_Forgot'},
+            {label: 'Show Memorized', value: 'Show_Memorized'},
+          ]}
         />
       </View>
     );
@@ -36,6 +40,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  return {arrayFilter: state.arrayFilter, filterMode: state.filterMode};
+  return {filterMode: state.filterMode};
 };
 export default connect(mapStateToProps)(Filter);
