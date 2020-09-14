@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import dimensions from '../utils/dimensions';
 import {connect} from 'react-redux';
+import actionCreatetor from '../redux/actions/actionCreatetor';
 
 class WordItem extends Component {
   renderItemWord = (item) => {
@@ -21,9 +22,7 @@ class WordItem extends Component {
           </View>
           <View style={styles.textgroup}>
             <TouchableOpacity
-              onPress={() =>
-                this.props.dispatch({type: 'TOGGLE_WORD', id: item.id})
-              }
+              onPress={() => this.props.toggleWord(item.id)}
               style={
                 item.isMemorized
                   ? styles.buttonisForgot
@@ -34,9 +33,7 @@ class WordItem extends Component {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() =>
-                this.props.dispatch({type: 'REMOVE_WORD', id: item.id})
-              }
+              onPress={() => this.props.removeWord(item.id)}
               style={styles.buttonRemove}>
               <Text style={styles.textRemove}>Remove</Text>
             </TouchableOpacity>
@@ -102,4 +99,4 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {filterMode: state.filterMode};
 };
-export default connect(mapStateToProps)(WordItem);
+export default connect(mapStateToProps, actionCreatetor)(WordItem);
