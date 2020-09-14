@@ -9,6 +9,7 @@ import {
   Keyboard,
 } from 'react-native';
 import {connect} from 'react-redux';
+import actionCreatetor from '../redux/actions/actionCreatetor';
 
 class Form extends Component {
   state = {
@@ -34,7 +35,7 @@ class Form extends Component {
     Keyboard.dismiss();
     this.textInputEn.clear();
     this.textInputVn.clear();
-    this.props.dispatch({type: 'ADD_WORD', words: newWords});
+    this.props.addWord(newWords);
   };
   renderForm = (shouldShowForm) => {
     if (shouldShowForm) {
@@ -61,7 +62,7 @@ class Form extends Component {
               <Text style={styles.textTouchable}>Add word</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.dispatch({type: 'TOGGLE_FORM'})}
+              onPress={this.props.toggleForm}
               style={styles.touchableCancel}>
               <Text style={styles.textTouchable}>Cancel</Text>
             </TouchableOpacity>
@@ -71,7 +72,7 @@ class Form extends Component {
     } else {
       return (
         <TouchableOpacity
-          onPress={() => this.props.dispatch({type: 'TOGGLE_FORM'})}
+          onPress={this.props.toggleForm}
           style={styles.buttonOpenForm}>
           <Text style={styles.textOpenForm}>+</Text>
         </TouchableOpacity>
@@ -134,4 +135,4 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {shouldShowForm: state.shouldShowForm, words: state.words};
 };
-export default connect(mapStateToProps)(Form);
+export default connect(mapStateToProps, actionCreatetor)(Form);

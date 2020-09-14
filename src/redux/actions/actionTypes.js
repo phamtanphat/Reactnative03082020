@@ -1,0 +1,4 @@
+const TYPE_ADD_WORD = 'ADD_WORD';
+const TYPE_TOGGLE_FORM = 'TOGGLE_FORM';
+
+export default {TYPE_ADD_WORD, TYPE_TOGGLE_FORM};
