@@ -1,11 +1,7 @@
-const worddefault = [
-  {id: 1, en: 'One', vn: 'Mot', isMemorized: false},
-  {id: 2, en: 'Two', vn: 'Hai', isMemorized: false},
-  {id: 3, en: 'Three', vn: 'Ba', isMemorized: false},
-  {id: 4, en: 'Four', vn: 'Bon', isMemorized: true},
-];
-
-export function wordReducer(state = worddefault, action) {
+export function wordReducer(state = [], action) {
+  if (action.type === 'TYPE_FETCH_ALL_WORD') {
+    return action.words;
+  }
   if (action.type === 'ADD_WORD') {
     return action.words;
   }

@@ -1,4 +1,7 @@
 import actionTypes from './actionTypes';
+import Axios from 'axios';
+
+const url = 'https://serverword03082020.herokuapp.com/word';
 
 const addWord = (words) => {
   return {type: actionTypes.TYPE_ADD_WORD, words};
@@ -16,4 +19,26 @@ const removeWord = (id) => {
   return {type: actionTypes.TYPE_REMOVE_WORD, id};
 };
 
-export default {addWord, toggleForm, setFilterMode, toggleWord, removeWord};
+const fetchAllWord = () => {
+  return (dispatch) => {
+    Axios.get(url)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({
+            type: actionTypes.TYPE_FETCH_ALL_WORD,
+            words: response.data.words,
+          });
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+};
+
+export default {
+  addWord,
+  toggleForm,
+  setFilterMode,
+  toggleWord,
+  removeWord,
+  fetchAllWord,
+};
