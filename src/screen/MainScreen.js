@@ -32,7 +32,9 @@ export default class MainScreen extends Component {
       <View style={styles.container}>
         <Form />
         <Filter placeholder={{label: 'Lựa chọn hiển thị'}} />
-        <Word />
+        <View style={{flex: 1}}>
+          <Word />
+        </View>
       </View>
     );
   }
