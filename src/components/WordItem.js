@@ -13,7 +13,7 @@ class WordItem extends Component {
       return null;
     } else {
       return (
-        <View key={item.id} style={styles.wordgroup}>
+        <View key={item._id} style={styles.wordgroup}>
           <View style={styles.textgroup}>
             <Text style={styles.textEn}>{item.en}</Text>
             <Text style={styles.textVn}>
@@ -22,7 +22,7 @@ class WordItem extends Component {
           </View>
           <View style={styles.textgroup}>
             <TouchableOpacity
-              onPress={() => this.props.toggleWord(item.id)}
+              onPress={() => this.props.toggleWord(item._id, !item.isMemorized)}
               style={
                 item.isMemorized
                   ? styles.buttonisForgot
@@ -33,7 +33,7 @@ class WordItem extends Component {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.removeWord(item.id)}
+              onPress={() => this.props.removeWord(item._id)}
               style={styles.buttonRemove}>
               <Text style={styles.textRemove}>Remove</Text>
             </TouchableOpacity>

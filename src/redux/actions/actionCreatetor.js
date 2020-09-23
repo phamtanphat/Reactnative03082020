@@ -1,10 +1,21 @@
 import actionTypes from './actionTypes';
 import Axios from 'axios';
 
-const url = 'https://serverword03082020.herokuapp.com/word';
+const url = 'https://serverword03082020.herokuapp.com/word/';
 
-const addWord = (words) => {
-  return {type: actionTypes.TYPE_ADD_WORD, words};
+const fetchInsertWord = (word) => {
+  return (dispatch) => {
+    Axios.post(url, {en: word.en, vn: word.vn})
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({
+            type: actionTypes.TYPE_FETCH_INSERT_WORD,
+            word: response.data.word,
+          });
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 };
 const toggleForm = () => {
   return {type: actionTypes.TYPE_TOGGLE_FORM};
@@ -12,11 +23,34 @@ const toggleForm = () => {
 const setFilterMode = (filterMode) => {
   return {type: actionTypes.TYPE_SET_FILTER_MODE, filterMode};
 };
-const toggleWord = (id) => {
-  return {type: actionTypes.TYPE_TOGGLE_WORD, id};
+const toggleWord = (_id, isMemorized) => {
+  return (dispatch) => {
+    Axios.put(url + _id, {isMemorized})
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({
+            type: actionTypes.TYPE_FETCH_TOGGLE_WORD,
+            _id: _id,
+            word: response.data.word,
+          });
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 };
-const removeWord = (id) => {
-  return {type: actionTypes.TYPE_REMOVE_WORD, id};
+const removeWord = (_id) => {
+  return (dispatch) => {
+    Axios.delete(url + _id)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({
+            type: actionTypes.TYPE_FETCH_REMOVE_WORD,
+            _id: _id,
+          });
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 };
 
 const fetchAllWord = () => {
@@ -35,7 +69,7 @@ const fetchAllWord = () => {
 };
 
 export default {
-  addWord,
+  fetchInsertWord,
   toggleForm,
   setFilterMode,
   toggleWord,

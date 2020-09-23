@@ -30,12 +30,10 @@ class Form extends Component {
       vn: textVn,
       isMemorized: false,
     };
-    const newWords = Object.assign([], words);
-    newWords.unshift(newWord);
     Keyboard.dismiss();
     this.textInputEn.clear();
     this.textInputVn.clear();
-    this.props.addWord(newWords);
+    this.props.fetchInsertWord(newWord);
   };
   renderForm = (shouldShowForm) => {
     if (shouldShowForm) {
